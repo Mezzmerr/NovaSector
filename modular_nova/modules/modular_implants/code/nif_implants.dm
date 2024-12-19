@@ -2,7 +2,7 @@
 /obj/item/organ/cyberimp/brain/nif/standard
 	name = "Standard Type NIF"
 	desc = "'Standard-Type' is a classification for high-quality Nanite Implant Frameworks. This category primarily includes Framework patterns with high reliability, seamless bonding with a user, and a combination of storage space and processing power to run a wide array of programs."
-	manufacturer_notes = "While countless manufacturers produce their own implementation of NIFs, open-source or not, Standard-Type models are the universal touchstone of quality. These are the results of almost five years of improvements on older models of Frameworks, and are rather coveted due to being extremely difficult to 'homebrew."
+	manufacturer_notes = "While countless manufacturers produce their own implementation of NIFs, open-source or not, Standard-Type models are the universal touchstone of quality. These are the results of almost five years of improvements on older models of Frameworks, and are rather coveted due to being extremely difficult to 'homebrew.'"
 
 /obj/item/organ/cyberimp/brain/nif/roleplay_model
 	name = "Econo-Deck Type NIF"
