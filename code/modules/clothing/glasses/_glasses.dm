@@ -342,7 +342,7 @@
 
 /obj/item/clothing/glasses/regular/thin
 	name = "thin prescription glasses"
-	desc = "More expensive, more fragile and much less practical, but oh so fashionable."
+	desc = "More expensive, more fragile, and much less practical, but oh so fashionable."
 	icon_state = "glasses_thin"
 
 /obj/item/clothing/glasses/regular/jamjar
@@ -353,7 +353,7 @@
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
-	desc = "Made by Uncool. Co."
+	desc = "Made by Uncool Co."
 	icon_state = "glasses_hipster"
 	inhand_icon_state = null
 
@@ -391,7 +391,7 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	icon_state = "sunhudbeer"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
+	desc = "A pair of sunglasses outfitted with an apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	clothing_traits = list(TRAIT_BOOZE_SLIDER, TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/chemical
@@ -438,7 +438,7 @@
 
 /obj/item/clothing/glasses/sunglasses/gar/giga/red
 	name = "giga gar glasses"
-	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
+	desc = "We evolve past the person we were a minute before. Little by little, we advance with each turn. That's how a drill works!"
 	icon_state = "gigagar_red"
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
@@ -718,7 +718,7 @@
 
 /obj/item/clothing/glasses/salesman
 	name = "colored glasses"
-	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
+	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with \"Best Salesman 1997.\""
 	icon_state = "salesman"
 	inhand_icon_state = "salesman"
 	flags_cover = GLASSESCOVERSEYES

@@ -94,7 +94,7 @@
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
-	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
+	desc = "A heads-up display capable of analyzing the integrity and status of robots and exosuits."
 	icon_state = "diagnostichud"
 	clothing_traits = list(TRAIT_DIAGNOSTIC_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange

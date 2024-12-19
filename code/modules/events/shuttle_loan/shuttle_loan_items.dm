@@ -20,4 +20,4 @@
 	default_raw_text = "GOOD LUCK!"
 
 /obj/item/paper/fluff/cargo/bomb/allyourbase
-	default_raw_text = "Somebody set us up the bomb!"
+	default_raw_text = "Somebody set up us the bomb!"

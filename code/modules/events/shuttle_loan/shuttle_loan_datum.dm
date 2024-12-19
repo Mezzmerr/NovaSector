@@ -80,7 +80,7 @@
 
 /datum/shuttle_loan_situation/syndiehijacking
 	sender = "CentCom Counterintelligence"
-	announcement_text = "The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
+	announcement_text = "The Syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
 	shuttle_transit_text = "Syndicate hijack team incoming."
 	logging_desc = "Syndicate boarding party"
 
@@ -228,7 +228,7 @@
  */
 /datum/shuttle_loan_situation/mail_strike
 	sender = "Spinward Mail Workers Union"
-	announcement_text = "The Mail Workers Union wants to borrow your cargo shuttle to employ \"advanced union strike tactics\" with. Payment is strictly in mails."
+	announcement_text = "The Mail Workers Union wants to borrow your cargo shuttle to employ \"advanced union strike tactics\" with. Payment is strictly in mail."
 	bonus_points = 0
 	thanks_msg = "The cargo shuttle should return in five minutes."
 	shuttle_transit_text = "Nothing stops the mail."

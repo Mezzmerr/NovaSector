@@ -1,6 +1,6 @@
 /datum/experiment/physical/meat_wall_explosion
 	name = "Extreme Cooking Experiment"
-	description = "There has been interest in using our engineering equipment to see what kind of new cooking appliances we can create"
+	description = "There has been interest in using our engineering equipment to see what kind of new cooking appliances we can create."
 
 /datum/experiment/physical/meat_wall_explosion/register_events()
 	if(!iswallturf(currently_scanned_atom))

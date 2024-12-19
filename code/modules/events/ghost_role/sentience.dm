@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	var/pets = pick("animals/bots", "bots/animals", "pets", "simple animals", "lesser lifeforms", "\[REDACTED\]")
 	var/strength = pick("human", "moderate", "lizard", "security", "command", "clown", "low", "very low", "\[REDACTED\]")
 
-	sentience_report += "Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
+	sentience_report += "Based on [data], we believe that [one] of the station's [pets] has developed [strength]-level intelligence, and the ability to communicate."
 
 	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
 
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		to_chat(selected, span_userdanger("Hello world!"))
 		to_chat(selected, span_warning("Due to freak radiation and/or chemicals \
-			and/or lucky chance, you have gained human level intelligence \
+			and/or luck, you have gained human level intelligence \
 			and the ability to speak and understand human language!"))
 
 	return SUCCESSFUL_SPAWN
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		low += checked_mob
 
 /datum/round_event_control/sentience/all
-	name = "Station-wide Human-level Intelligence"
+	name = "Station-Wide Human-Level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience/all
 	weight = 0
 	category = EVENT_CATEGORY_FRIENDLY

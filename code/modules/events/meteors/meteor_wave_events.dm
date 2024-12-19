@@ -50,7 +50,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
+	priority_announce("Meteors have been detected on a collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))
@@ -109,16 +109,16 @@
 /datum/round_event/meteor_wave/dust_storm/announce(fake)
 	var/list/reasons = list()
 
-	reasons += "[station_name()] is passing through a debris cloud, expect minor damage \
+	reasons += "[station_name()] is passing through a debris cloud. Expect minor damage \
 		to external fittings and fixtures."
 
 	reasons += "Nanotrasen Superweapons Division is testing a new prototype \
-		[pick("field","projection","nova","super-colliding","reactive")] \
+		[pick("field","projection","nova","supercolliding","reactive")] \
 		[pick("cannon","artillery","tank","cruiser","\[REDACTED\]")], \
 		some mild debris is expected."
 
-	reasons += "A neighbouring station is throwing rocks at you. (Perhaps they've \
-		grown tired of your messages.)"
+	reasons += "A neighbouring station is throwing rocks at you. Perhaps they've \
+		grown tired of your messages."
 
 	reasons += "[station_name()]'s orbit is passing through a cloud of remnants from an asteroid \
 		mining operation. Minor hull damage is to be expected."

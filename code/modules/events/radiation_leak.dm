@@ -92,14 +92,14 @@
 	for(var/tool_method in methods_to_fix)
 		signals_to_add += COMSIG_ATOM_TOOL_ACT(how_do_we_fix_it[tool_method])
 
-	the_source_of_our_problems.visible_message(span_danger("[the_source_of_our_problems] starts to emanate a horrible green gas!"))
+	the_source_of_our_problems.visible_message(span_danger("[the_source_of_our_problems] starts to emit a horrible green gas!"))
 	// Add the component that makes the thing radioactive
 	the_source_of_our_problems.AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 2 SECONDS, \
 		range = 5, \
 		threshold = RAD_MEDIUM_INSULATION, \
-		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
+		examine_text = span_green("<i>It's emitting a green gas... you could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
 	)
 	// Register signals to make it fixable
 	if(length(signals_to_add))
@@ -126,7 +126,7 @@
 	if(!the_end_of_our_problems)
 		return
 
-	the_end_of_our_problems.visible_message(span_notice("The gas emanating from [the_end_of_our_problems] dissipates."))
+	the_end_of_our_problems.visible_message(span_notice("The gas emitting from [the_end_of_our_problems] dissipates."))
 	qdel(the_end_of_our_problems.GetComponent(/datum/component/radioactive_emitter))
 	if(length(signals_to_add))
 		UnregisterSignal(the_end_of_our_problems, signals_to_add)

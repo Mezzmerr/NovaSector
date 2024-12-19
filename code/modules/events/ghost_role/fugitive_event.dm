@@ -159,7 +159,7 @@
 	var/announcement_title = ""
 	switch(backstory)
 		if(HUNTER_PACK_COPS)
-			announcement_text_list += "Attention Crew of [GLOB.station_name], this is the Police. A wanted criminal has been reported taking refuge on your station."
+			announcement_text_list += "Attention Crew of [GLOB.station_name], this is the police. A wanted criminal has been reported taking refuge on your station."
 			announcement_text_list += "We have a warrant from the SSC authorities to take them into custody. Officers have been dispatched to your location."
 			announcement_text_list += "We demand your cooperation in bringing this criminal to justice."
 			announcement_title += "Spacepol Command"
@@ -174,7 +174,7 @@
 		if(HUNTER_PACK_PSYKER)
 			announcement_text_list += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
 			announcement_text_list += "We're also offering fortune telling services out of the front door if you have paying customers."
-			announcement_title += "Fortune-Telling Entertainment Shuttle"
+			announcement_title += "Fortune Telling Entertainment Shuttle"
 		if(HUNTER_PACK_MI13)
 			announcement_text_list += "Illegal intrusion detected in the crew monitoring network. Central Command has been informed."
 			announcement_text_list += "Please report any suspicious individuals or behaviour to your local security team."

@@ -9,7 +9,7 @@
 	description = "Hides surprise filled easter eggs in maintenance."
 
 /datum/round_event/easter/announce(fake)
-	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
+	priority_announce(pick("Hip-hop into Easter!","Find some bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give chocolate eggs!"))
 
 
 /datum/round_event_control/rabbitrelease
@@ -69,7 +69,7 @@
 	name = "Easter Bunny head"
 	icon_state = "bunnyhead"
 	inhand_icon_state = null
-	desc = "Considerably more cute than 'Frank'."
+	desc = "Considerably more cute than \"Frank.\""
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -143,7 +143,7 @@
 //Easter Recipes + food
 /obj/item/food/hotcrossbun
 	name = "hot cross bun"
-	desc = "The cross represents the Assistants that died for your sins."
+	desc = "The cross represents the assistants that died for your sins."
 	icon_state = "hotcrossbun"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
 	foodtypes = SUGAR | GRAIN | BREAKFAST

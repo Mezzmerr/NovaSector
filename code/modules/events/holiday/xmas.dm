@@ -14,7 +14,7 @@
 		joke_paper.name = "[pick("awful","terrible","unfunny")] joke"
 		joke_paper.add_raw_text(pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
 			"Why couldn't the snowman get laid?\n\n<i>He was frigid!</i>",
-			"Where are santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
+			"Where are Santa's helpers educated?\n\n<i>Nowhere, they're ELF-taught.</i>",
 			"What happened to the man who stole advent calanders?\n\n<i>He got 25 days.</i>",
 			"What does Santa get when he gets stuck in a chimney?\n\n<i>Claus-trophobia.</i>",
 			"Where do you find chili beans?\n\n<i>The north pole.</i>",
@@ -75,7 +75,7 @@
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
-	description = "Spawns santa, who shall roam the station, handing out gifts."
+	description = "Spawns Santa, who shall roam the station, handing out gifts."
 
 /datum/round_event/ghost_role/santa
 	role_name = "Santa"

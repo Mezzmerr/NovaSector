@@ -10,13 +10,13 @@
 	var/maximum_mice = 15
 
 /datum/round_event/mice_migration/announce(fake)
-	var/cause = pick("space-winter", "budget-cuts", "Ragnarok",
+	var/cause = pick("space-winter", "budget cuts", "Ragnarok",
 		"space being cold", "\[REDACTED\]", "climate change",
 		"bad luck")
 	var/plural = pick("a number of", "a horde of", "a pack of", "a swarm of",
 		"a whoop of", "not more than [maximum_mice]")
 	var/name = pick("rodents", "mice", "squeaking things",
-		"wire eating mammals", "\[REDACTED\]", "energy draining parasites")
+		"wire-eating mammals", "\[REDACTED\]", "energy-draining parasites")
 	var/movement = pick("migrated", "swarmed", "stampeded", "descended")
 	var/location = pick("maintenance tunnels", "maintenance areas",
 		"\[REDACTED\]", "place with all those juicy wires")

@@ -19,7 +19,7 @@
 /datum/experiment/scanning/points/slime/expert
 	name = "Expert Slime Survey"
 	description = "The intergalactic society of xenobiologists are currently looking for samples of the most complex \
-		slime cores, we are tasking your station with providing them with everything they need."
+		slime cores. We are tasking your station with providing them with everything they need."
 	required_points = 10
 	required_atoms = list(/obj/item/slime_extract/adamantine = 1,
 		/obj/item/slime_extract/oil = 1,
@@ -82,7 +82,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and its derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
+	description = "Combustion of hydrogen and its derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only hydrogen or tritium fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -93,7 +93,7 @@
 
 /datum/experiment/ordnance/explosive/nobliumbomb
 	name = "Noblium Explosives"
-	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hyper-Noblium Condensation is allowed."
+	description = "The formation of hyper-noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only hyper-noblium condensation is allowed."
 	gain = list(15,60,120)
 	target_amount = list(50,100,300)
 	experiment_proper = TRUE
@@ -103,7 +103,7 @@
 
 /datum/experiment/ordnance/explosive/pressurebomb
 	name = "Reactionless Explosives"
-	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure.Capture any tank explosion with a Doppler Array and publish the data in a paper. No gas reactions are allowed."
+	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Capture any tank explosion with a Doppler Array and publish the data in a paper. No gas reactions are allowed."
 	gain = list(10,50,100)
 	target_amount = list(20,50,100)
 	experiment_proper = TRUE
@@ -120,7 +120,7 @@
 
 /datum/experiment/ordnance/gaseous/plasma
 	name = "Plasma Gas Shells"
-	description = "The delivery of Plasma gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
+	description = "The delivery of plasma gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,40)
 	target_amount = list(200,600)
 	experiment_proper = TRUE
@@ -135,8 +135,8 @@
 	required_gas = /datum/gas/bz
 
 /datum/experiment/ordnance/gaseous/noblium
-	name = "Hypernoblium Gas Shells"
-	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
+	name = "Hyper-noblium Gas Shells"
+	description = "The delivery of hyper-noblium gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
@@ -144,7 +144,7 @@
 
 /datum/experiment/ordnance/gaseous/halon
 	name = "Halon Gas Shells"
-	description = "The delivery of Halon gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	description = "The delivery of halon gas into an area of operation might prove useful. Perform research and publish papers on this field."
 	gain = list(10,30,60)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
@@ -156,56 +156,56 @@
 	possible_material_types = list(/datum/material/meat)
 
 /datum/experiment/scanning/random/material/easy
-	name = "Low Grade Material Scanning Experiment"
-	description = "Material science is all about a basic understanding of the universe, and how it's built. To explain this, build something basic and we'll show you how to break it."
+	name = "Low-Grade Material Scanning Experiment"
+	description = "Material science is all about a basic understanding of the universe and how it's built. To explain this, build something basic and we'll show you how to break it."
 	total_requirement = 6
 	possible_types = list(/obj/structure/chair, /obj/structure/toilet, /obj/structure/table)
 	possible_material_types = list(/datum/material/iron, /datum/material/glass)
 
 /datum/experiment/scanning/random/material/medium
-	name = "Medium Grade Material Scanning Experiment"
-	description = "Not all materials are strong enough to hold together a space station. Look at these materials for example, and see what makes them useful for our electronics and equipment."
+	name = "Medium-Grade Material Scanning Experiment"
+	description = "Not all materials are strong enough to hold together a space station. Look at these materials and see what makes them useful for our electronics and equipment."
 	possible_material_types = list(/datum/material/silver, /datum/material/gold, /datum/material/plastic, /datum/material/titanium)
 
 /datum/experiment/scanning/random/material/medium/one
-	name = "Medium Grade Material Scanning Experiment One"
+	name = "Medium-Grade Material Scanning Experiment One"
 
 /datum/experiment/scanning/random/material/medium/two
-	name = "Medium Grade Material Scanning Experiment Two"
+	name = "Medium-Grade Material Scanning Experiment Two"
 
 /datum/experiment/scanning/random/material/medium/three
-	name = "Medium Grade Material Scanning Experiment Three"
+	name = "Medium-Grade Material Scanning Experiment Three"
 
 /datum/experiment/scanning/random/material/hard
-	name = "High Grade Material Scanning Experiment"
+	name = "High-Grade Material Scanning Experiment"
 	description = "NT spares no expense to test even the most valuable of materials for their qualities as construction materials. Go build us some of these exotic creations and collect the data."
 	possible_material_types = list(/datum/material/diamond, /datum/material/plasma, /datum/material/uranium)
 
 /datum/experiment/scanning/random/material/hard/one
-	name = "High Grade Material Scanning Experiment One"
+	name = "High-Grade Material Scanning Experiment One"
 
 /datum/experiment/scanning/random/material/hard/two
-	name = "High Grade Material Scanning Experiment Two"
+	name = "High-Grade Material Scanning Experiment Two"
 
 /datum/experiment/scanning/random/material/hard/three
-	name = "High Grade Material Scanning Experiment Three"
+	name = "High-Grade Material Scanning Experiment Three"
 
 /datum/experiment/scanning/random/plants/wild
 	name = "Wild Biomatter Mutation Sample"
-	description = "Due to a number of reasons, (Solar Rays, a diet consisting only of unstable mutagen, entropy) plants with lower levels of instability may occasionally mutate upon harvest. Scan one of these samples for us."
+	description = "Due to a number of reasons (solar rays, a diet consisting only of unstable mutagen, entropy), plants with lower levels of instability may occasionally mutate upon harvest. Scan one of these samples for us."
 	performance_hint = "\"Wild\" mutations have been recorded to occur above 30 points of instability, while species mutations occur above 60 points of instability."
 	total_requirement = 1
 
 /datum/experiment/scanning/random/plants/traits
 	name = "Unique Biomatter Mutation Sample"
 	description = "We here at CentCom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
-	performance_hint = "The wide varities of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
+	performance_hint = "The wide varieties of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes
 	name = "Advanced Stock Parts Benchmark"
-	description = "Our newly-designed advanced machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow."
+	description = "Our newly-designed advanced machinery components require practical application tests for hints at possible further advancements, as well as general confirmation that we didn't actually design worse parts somehow."
 	required_points = 6
 	required_atoms = list(
 		/obj/machinery/rnd/production/protolathe/department/science = 1,
@@ -249,7 +249,7 @@
 	required_tier = 3
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay
-	name = "Military-grade Mech Bay Setup"
+	name = "Military-Grade Mech Bay Setup"
 	description = "Constructing combat-oriented exosuits is a pricy endeavour. Make sure you have an efficient setup for production, and we'll send over some of our design documents."
 	required_points = 6
 	required_atoms = list(
@@ -260,8 +260,8 @@
 	required_tier = 3
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser
-	name = "High-power Micro-lasers Calibration"
-	description = "Our Nanotrasen High-Power Office-Ready Laser Pointer ™ isn't powerful enough to strike airborne Syndidrones out of the sky yet. Find us some diode applications for hints on how to improve them!"
+	name = "High-Power Micro-Lasers Calibration"
+	description = "Our Nanotrasen High-Power Office-Ready Laser Pointer™ isn't powerful enough to strike airborne Syndidrones out of the sky yet. Find us some diode applications for hints on how to improve them!"
 	required_points = 10
 	required_atoms = list(
 		/obj/machinery/mecha_part_fabricator = 1,
@@ -304,7 +304,7 @@
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells
 	name = "Power Cells Capacity Test"
-	description = "Nanotrasen has two major problems with their new Hamster-powered Generator Array: excess of power produced and violent protests of Animal Rights Consortium activists over genetically modifying hamsters with the Hulk gene. We place dibs on dealing with the latter!"
+	description = "Nanotrasen has two major problems with their new Hamster-Powered Generator Array: excess of power produced and violent protests of Animal Rights Consortium activists over genetically modifying hamsters with the Hulk gene. We place dibs on dealing with the latter!"
 	required_points = 8
 	required_atoms = list(
 		/obj/machinery/recharge_station = 1,
@@ -316,7 +316,7 @@
 	required_stock_part = /obj/item/stock_parts/power_store/cell/hyper
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser
-	name = "Ultra-high-power Micro-lasers Calibration"
+	name = "Ultra-High-Power Micro-Lasers Calibration"
 	description = "We're very close to outperforming the surgeons of the past by inventing laser tools precise enough to perform surgeries on grapes. Help us fine-tune the diodes to perfection!"
 	required_points = 10
 	required_atoms = list(
@@ -348,7 +348,7 @@
 /// Scan a person with any mutation
 /datum/experiment/scanning/people/mutant
 	name = "Human Field Research: Genetic Mutations"
-	description = "Our new research assistants have been drinking random chemicals for science, when one of them mastered telekinesis and another started shooting lasers from the eyes. This could be useful for our studies. Repeat the experiment by making assistants drink unstable mutagen, scan them and report the results."
+	description = "Our new research assistants were drinking random chemicals for science, when one of them mastered telekinesis and another started shooting lasers from the eyes. This could be useful for our studies. Repeat the experiment by making assistants drink unstable mutagen, scan them, and report the results."
 	performance_hint = "Scan a person with a random mutation."
 	required_traits_desc = "random mutation"
 
@@ -449,7 +449,7 @@
 /// Scan an android
 /datum/experiment/scanning/people/android
 	name = "Human Field Research: Full Augmentation"
-	description = "Perform a full cybernetic augmentation on a crewmate then scan them to test their newfound capabilities and new sensory and cognitive functions."
+	description = "Perform a full cybernetic augmentation on a crewmate, then scan them to test their newfound capabilities, and new sensory and cognitive functions."
 	performance_hint = "Achieve full augmentation by performing a set of surgery operations."
 	required_traits_desc = "fully augmented android"
 	required_count = 1
@@ -483,14 +483,14 @@
 
 /datum/experiment/scanning/reagent/cryostylane
 	name = "Pure Cryostylane Scan"
-	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 99% purity and scan the beaker."
+	description = "It appears that the cryostylane reagent can potentially halt all physiological processes in the human body. Produce cryostylane with at least 99% purity and scan the beaker."
 	performance_hint = "Keep the temperature as high as possible during the reaction."
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
 
 /datum/experiment/scanning/reagent/haloperidol
 	name = "Pure Haloperidol Scan"
-	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 98% purity and scan the beaker."
+	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce haloperidol with at least 98% purity and scan the beaker."
 	performance_hint = "Exothermic and consumes hydrogen during reaction."
 	required_reagent = /datum/reagent/medicine/haloperidol
 	min_purity = 0.98
@@ -512,7 +512,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
 	name = "Upgraded Stock Parts Benchmark"
-	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded Parts and report the results."
+	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded parts and report the results."
 	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
@@ -521,7 +521,7 @@
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_any
 	name = "Advanced Stock Parts Benchmark"
-	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Advanced Parts and report the results."
+	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Advanced parts and report the results."
 	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
