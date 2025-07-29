@@ -127,10 +127,10 @@
 	QDEL_LIST(loaded_nifsofts)
 	return ..()
 
-/obj/item/organ/cyberimp/brain/nif/mob_insert(mob/living/carbon/human/insertee, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+/obj/item/organ/cyberimp/brain/nif/on_mob_insert(mob/living/carbon/human/insertee, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
 
-	if(linked_mob && stored_ckey != insertee.ckey && theft_protection)
+	if(stored_ckey && stored_ckey != insertee.ckey && theft_protection)
 		insertee.audible_message(span_warning("[src] lets out a negative buzz before forcefully removing itself from [insertee]'s brain."))
 		playsound(insertee, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		Remove(insertee)
@@ -154,7 +154,7 @@
 		send_message("Loading preinstalled and stored NIFSofts, please wait...")
 		addtimer(CALLBACK(src, PROC_REF(install_preinstalled_nifsofts)), 3 SECONDS)
 
-/obj/item/organ/cyberimp/brain/nif/mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/cyberimp/brain/nif/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	. = ..()
 
 	organ_owner.log_message("'s [src] was removed from [organ_owner]", LOG_GAME)
@@ -166,12 +166,13 @@
 
 	if(linked_mob)
 		UnregisterSignal(linked_mob, COMSIG_LIVING_DEATH, PROC_REF(damage_on_death))
+	linked_mob = null
 
 	QDEL_LIST(loaded_nifsofts)
 
 ///Installs preinstalled NIFSofts
 /obj/item/organ/cyberimp/brain/nif/proc/install_preinstalled_nifsofts()
-	if(!preinstalled_nifsofts)
+	if(!preinstalled_nifsofts || !linked_mob || calibrating)
 		return FALSE
 
 	for(var/datum/nifsoft/preinstalled_nifsoft as anything in preinstalled_nifsofts)
@@ -264,11 +265,11 @@
 	if(!blood_drain)
 		power_usage += (blood_drain_rate * blood_conversion_rate)
 
-		balloon_alert(linked_mob, "Blood draining disabled")
+		balloon_alert(linked_mob, "blood draining disabled")
 		return
 
 	power_usage -= (blood_drain_rate * blood_conversion_rate)
-	balloon_alert(linked_mob, "Blood draining enabled")
+	balloon_alert(linked_mob, "blood draining enabled")
 
 ///Checks if the NIF is able to draw blood as a power source?
 /obj/item/organ/cyberimp/brain/nif/proc/blood_check()
@@ -370,7 +371,7 @@
 
 ///Sends a message to the owner of the NIF. Typically used for messages from the NIF itself or from NIFSofts.
 /obj/item/organ/cyberimp/brain/nif/proc/send_message(message_to_send, alert = FALSE)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 	var/tag = sheet.icon_tag("nif-[chat_icon]")
 	var/nif_icon = ""
 
@@ -407,7 +408,7 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/added_stun_duration = 200/severity // the previous stun duration added by the parent call
+	var/added_stun_duration = 20 SECONDS / severity // the previous stun duration added by the parent call
 	owner.AdjustStun(-added_stun_duration) // we want to negate that stun here
 	to_chat(owner, span_warning("You feel a stinging pain in your head!"))
 	if(!durability_loss_vulnerable)
@@ -487,10 +488,10 @@
 
 	return FALSE
 
-/datum/asset/spritesheet/chat/create_spritesheets()
+/datum/asset/spritesheet_batched/chat/create_spritesheets()
 	. = ..()
 
-	InsertAll("nif", 'modular_nova/modules/modular_implants/icons/chat.dmi')
+	insert_all_icons("nif", 'modular_nova/modules/modular_implants/icons/chat.dmi')
 
 /obj/item/autosurgeon/organ/nif
 	starting_organ = /obj/item/organ/cyberimp/brain/nif/standard

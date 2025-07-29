@@ -18,17 +18,15 @@
 	mask_worn_overlay = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
-	/// Speed added to the control unit.
-	var/speed_added = 0.5
-	/// Speed that we actually added.
-	var/actual_speed_added = 0
+	/// Slowdown added to the control unit while this module is disabled
+	var/space_slowdown = 0.5
 	/// Armor values added to the suit parts.
 	var/datum/armor/armor_mod = /datum/armor/mod_module_armor_boost
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/no_speedbost
-	speed_added = 0
+	space_slowdown = 0
 
 /datum/armor/mod_module_armor_boost
 	melee = 25
@@ -37,36 +35,37 @@
 	energy = 15
 
 /obj/item/mod/module/armor_booster/on_part_activation()
+	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
+	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_activation()
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
-	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(head_cover)
 		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
 		seal_helmet(mod, head_cover)
-	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		part.slowdown -= speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
@@ -76,19 +75,22 @@
 	if(head_cover)
 		UnregisterSignal(mod, COMSIG_MOD_PART_SEALED)
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
-	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		part.slowdown += speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-	mod.wearer.update_equipment_speed_mods()
+	mod.update_speed()
 	spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/armor_booster/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+	if (!active)
+		module_slowdowns += space_slowdown
+
+/obj/item/mod/module/armor_booster/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
@@ -101,6 +103,19 @@
 		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 	else
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
+
+/obj/item/mod/module/armor_booster/on_install()
+	. = ..()
+	RegisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY, PROC_REF(on_visor_overlay))
+
+/obj/item/mod/module/armor_booster/on_uninstall(deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY)
+
+/obj/item/mod/module/armor_booster/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
+	SIGNAL_HANDLER
+	if (active)
+		overrides += mutable_appearance(overlay_icon_file, "module_armorbooster_visor-[mod.skin]", layer = standing.layer + 0.1)
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
@@ -228,7 +243,7 @@
 	overlay_state_inactive = "module_insignia"
 	mask_worn_overlay = TRUE
 
-/obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/insignia/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
@@ -313,7 +328,7 @@
 	if(!.)
 		return
 	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
-	flame.preparePixelProjectile(target, mod.wearer)
+	flame.aim_projectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
@@ -396,6 +411,7 @@
 	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
+	. = ..()
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
@@ -405,6 +421,7 @@
 		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(current_disguise)
 		return_look()
 	possible_disguises = null
@@ -436,7 +453,7 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
 
 /obj/item/mod/module/chameleon/proc/return_look()
@@ -450,7 +467,7 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
 	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	current_disguise = null
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
@@ -468,10 +485,12 @@
 	var/old_size
 
 /obj/item/mod/module/plate_compression/on_install()
+	. = ..()
 	old_size = mod.w_class
 	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
+	. = ..()
 	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
@@ -515,10 +534,12 @@
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
-	mod.item_flags |= EXAMINE_SKIP
+	. = ..()
+	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
-	mod.item_flags &= ~EXAMINE_SKIP
+	. = ..()
+	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_part_activation()
 	mod.wearer.add_traits(traits_to_add, REF(src))
@@ -566,11 +587,16 @@
 
 /obj/item/mod/module/stealth/wraith
 	name = "MOD Wraith Cloaking Module"
-	desc = "A more destructive adaptation of the stealth module."
+	desc = "A more destructive adaptation of the stealth module. Incompatible with armor modules"
 	icon_state = "cloak_traitor"
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
 	cooldown_time = 2 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/stealth, /obj/item/mod/module/armor_booster)
+	/// How much time before we are able to cloak again after the cloak is broken (not disabled)
+	COOLDOWN_DECLARE(recloak_timer)
+	/// If the stealth portion of the module is active
+	var/stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
 	. = ..()
@@ -592,28 +618,41 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
+/obj/item/mod/module/stealth/wraith/on_activation()
+	return // Don't activate stealth when the module is activated because the stealth portion of the module is fully passive
+
+/obj/item/mod/module/stealth/wraith/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
+
 /obj/item/mod/module/stealth/wraith/on_part_activation()
 	start_stealth()
 
 /obj/item/mod/module/stealth/wraith/on_part_deactivation(deleting)
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+	stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/proc/start_stealth()
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	if(!COOLDOWN_FINISHED(src, recloak_timer)) // Prevents being able to bypass the cooldown by disabling and re-enabling the module
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), recloak_timer)
+		return
+	RegisterSignals(mod.wearer, list(COMSIG_LIVING_MOB_BUMP, COMSIG_ATOM_BUMPED, COMSIG_MOB_FIRED_GUN), PROC_REF(unstealth))
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
+	stealth_active = TRUE
 
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
+	if(!stealth_active)
+		return
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 5 SECONDS)
+		COOLDOWN_START(src, recloak_timer, 20 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 20 SECONDS)
+		stealth_active = FALSE
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()

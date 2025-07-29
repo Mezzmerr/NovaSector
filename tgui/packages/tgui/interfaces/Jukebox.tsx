@@ -8,8 +8,8 @@ import {
   LabeledList,
   Section,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
-import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -95,7 +95,7 @@ export const Jukebox = () => {
                   maxValue={50}
                   step={1}
                   stepPixelSize={1}
-                  onDrag={(e, value) =>
+                  onChange={(e, value) =>
                     act('set_volume', {
                       volume: value,
                     })

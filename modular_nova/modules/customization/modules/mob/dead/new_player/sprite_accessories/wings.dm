@@ -34,7 +34,10 @@
 
 	return FALSE
 
-/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(mob/living/carbon/human/wearer, ignore_suit = FALSE)
+/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, ignore_suit = FALSE)
+	var/mob/living/carbon/human/wearer = bodypart_owner.owner
+	if(!istype(wearer))
+		return TRUE
 	if(!wearer.w_uniform && !wearer.wear_suit)
 		return ..()
 
@@ -420,3 +423,12 @@
 	name = "Arfel Harpy"
 	icon_state = "arfelharpy_top"
 	color_src = USE_ONE_COLOR
+
+/datum/sprite_accessory/wings/mammal/harpy_fluffy
+	name = "Harpy (Fluffy)"
+	icon_state = "harpyfluffy"
+	color_src = USE_ONE_COLOR
+
+/datum/sprite_accessory/wings/mammal/top/harpy_fluffy
+	name = "Harpy (Fluffy, Top)"
+	icon_state = "harpyfluffy_top"

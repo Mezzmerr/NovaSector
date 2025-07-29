@@ -13,11 +13,10 @@
 	incompatible_modules = list(/obj/item/mod/module/baton_holster)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
-	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Have they sacrificed a baton to actually be able to use this?
 	var/eaten_baton = FALSE
 
-/obj/item/mod/module/baton_holster/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/mod/module/baton_holster/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/melee/baton/telescopic/contractor_baton) || eaten_baton)
 		return

@@ -3,11 +3,11 @@
 	id = SPECIES_ETHEREAL
 	meat = /obj/item/food/meat/slab/human/mutant/ethereal
 	mutantlungs = /obj/item/organ/lungs/ethereal
+	smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
 	mutantstomach = /obj/item/organ/stomach/ethereal
 	mutanttongue = /obj/item/organ/tongue/ethereal
 	mutantheart = /obj/item/organ/heart/ethereal
-	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
-	exotic_bloodtype = "LE"
+	exotic_bloodtype = BLOOD_TYPE_ETHEREAL
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1.0
 	inherent_traits = list(
@@ -47,7 +47,7 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load)
+/datum/species/ethereal/on_species_gain(mob/living/carbon/human/new_ethereal, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(!ishuman(new_ethereal))
 		return
@@ -181,6 +181,9 @@
 		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
 
+/datum/species/ethereal/get_hiss_sound(mob/living/carbon/human/ethereal)
+	return 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
+
 /datum/species/ethereal/get_physical_attributes()
 	return "Ethereals process electricity as their power supply, not food, and are somewhat resistant to it.\
 		They do so via their crystal core, their equivalent of a human heart, which will also encase them in a reviving crystal if they die.\
@@ -272,7 +275,7 @@
 		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
-/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load, regenerate_icons)
 	..()
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

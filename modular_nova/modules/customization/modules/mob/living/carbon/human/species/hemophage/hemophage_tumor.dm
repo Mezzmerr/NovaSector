@@ -22,23 +22,22 @@
 	base_icon_state = "tumor"
 	desc = "This pulsating organ nearly resembles a normal heart, but it's been twisted beyond any human appearance, having turned to the color of coal. The way it barely fits where the original organ was sends shivers down your spine... <i>The fact that it's what keeps them alive makes it all the more terrifying.</i>"
 	actions_types = list(/datum/action/cooldown/hemophage/toggle_dormant_state)
+	organ_flags = ORGAN_ORGANIC | ORGAN_UNREMOVABLE | ORGAN_TUMOR_CORRUPTED
 	/// Are we currently dormant? Defaults to PULSATING_TUMOR_ACTIVE (so FALSE).
 	var/is_dormant = PULSATING_TUMOR_ACTIVE
 	/// What is the current rate (per second) at which the tumor is consuming blood?
 	var/bloodloss_rate = NORMAL_BLOOD_DRAIN
 
 
-/obj/item/organ/heart/hemophage/mob_insert(mob/living/carbon/tumorful, special, movement_flags)
+/obj/item/organ/heart/hemophage/on_mob_insert(mob/living/carbon/tumorful, special, movement_flags)
 	. = ..()
-	if(!. || !owner)
-		return
 
 	SEND_SIGNAL(tumorful, COMSIG_PULSATING_TUMOR_ADDED, tumorful)
 	tumorful.AddElement(/datum/element/tumor_corruption)
 	RegisterSignal(tumorful, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 
-/obj/item/organ/heart/hemophage/mob_remove(mob/living/carbon/tumorless, special = FALSE)
+/obj/item/organ/heart/hemophage/on_mob_remove(mob/living/carbon/tumorless, special = FALSE)
 	. = ..()
 
 	SEND_SIGNAL(tumorless, COMSIG_PULSATING_TUMOR_REMOVED, tumorless)
@@ -83,6 +82,10 @@
 		owner.investigate_log("starved to death from lack of blood caused by [src].", INVESTIGATE_DEATHS)
 		owner.death() // Owch! Ran out of blood.
 
+/obj/item/organ/heart/hemophage/get_status_text(advanced, add_tooltips)
+	if(organ_flags & ORGAN_FAILING)
+		return conditional_tooltip("<font color='#cc3333'>Non-Functional</font>", "Repair surgically. Do not remove under any circumstances.", add_tooltips)
+	return ..()
 
 /// Simple helper proc that toggles the dormant state of the tumor, which also switches its appearance to reflect said change.
 /obj/item/organ/heart/hemophage/proc/toggle_dormant_state()

@@ -95,7 +95,7 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
@@ -117,7 +117,7 @@
 
 	var/static/cached_string = null
 	if(isnull(cached_string))
-		cached_string = examine_block(jointext(create_login_string(), "\n"))
+		cached_string = boxed_message(jointext(create_login_string(), "\n"))
 
 	to_chat(src, cached_string, type = MESSAGE_TYPE_INFO)
 

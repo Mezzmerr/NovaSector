@@ -135,6 +135,9 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 GLOBAL_LIST_EMPTY(bar_areas)
+// NOVA ADDITIONS START
+GLOBAL_LIST_EMPTY(traitor_start)
+// NOVA ADDITIONS END
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
@@ -147,6 +150,8 @@ GLOBAL_LIST_EMPTY(areas)
 GLOBAL_LIST_EMPTY(sortedAreas)
 /// An association from typepath to area instance. Only includes areas with `unique` set.
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
+/// A list of player-created areas.
+GLOBAL_LIST_EMPTY_TYPED(custom_areas, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 

@@ -22,7 +22,8 @@
 	design_ids = list(
 		"mod_plating_tarkon",
 		"arcs",
-		"rcd_tarkon"
+		"rcd_tarkon",
+		"tarkonbsc",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	hidden = TRUE
@@ -67,6 +68,21 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
 	)
+
+/datum/design/tarkonbsc
+	name = "Tarkon BSC Refinery Box"
+	id = "tarkonbsc"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/flatpacked_machine/boulder_collector/tarkon
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/tarkonrcd
 	name = "Tarkon R.C.D"
@@ -157,7 +173,7 @@
 	. = ..()
 	. += span_notice("You can use <b>research notes</b> on this to generate research points.")
 
-/obj/machinery/rnd/server/tarkon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/tarkon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/research_notes) && stored_research)
 		var/obj/item/research_notes/research_notes = attacking_item
 		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_notes.value))

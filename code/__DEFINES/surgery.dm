@@ -32,9 +32,15 @@
 #define ORGAN_HAZARDOUS (1<<12)
 /// This is an external organ, not an inner one. Used in several checks.
 #define ORGAN_EXTERNAL (1<<13)
+/// This is a ghost organ, which can be used for wall phasing.
+#define ORGAN_GHOST (1<<14)
+/// This is a mutant organ, having this makes you a -derived mutant to health analyzers.
+#define ORGAN_MUTANT (1<<15)
 // NOVA EDIT ADDITION START - Customization
 /// Synthetic organ granted by a species (for use for organ replacements between species)
-#define ORGAN_SYNTHETIC_FROM_SPECIES (1<<14)
+#define ORGAN_SYNTHETIC_FROM_SPECIES (1<<16)
+/// Organ flag for organs of hemophage origin, or organs that have since been infected by an hemophage's tumor.
+#define ORGAN_TUMOR_CORRUPTED (1<<17)
 // NOVA EDIT ADDITION END
 
 /// Scarring on the right eye
@@ -58,6 +64,8 @@
 #define BODYPART_IMPLANTED (1<<2)
 /// Bodypart never displays as a husk
 #define BODYPART_UNHUSKABLE (1<<3)
+/// Bodypart has never been added to a mob
+#define BODYPART_VIRGIN (1<<4)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()
@@ -97,6 +105,12 @@
 #define SURGERY_REQUIRES_REAL_LIMB (1<<4)
 ///Will grant a bonus during surgery steps to users with TRAIT_MORBID while they're using tools with CRUEL_IMPLEMENT
 #define SURGERY_MORBID_CURIOSITY (1<<5)
+/**
+ * Instead of checking if the tool used is an actual surgery tool to avoid accidentally whacking patients with the wrong tool,
+ * it'll check if it has a defined tool behaviour instead. Useful for surgeries that use mechanical tools instead of medical ones,
+ * like hardware manipulation.
+ */
+#define SURGERY_CHECK_TOOL_BEHAVIOUR (1<<6)
 
 ///Return true if target is not in a valid body position for the surgery
 #define IS_IN_INVALID_SURGICAL_POSITION(target, surgery) ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && (target.mobility_flags & MOBILITY_LIEDOWN && target.body_position != LYING_DOWN))

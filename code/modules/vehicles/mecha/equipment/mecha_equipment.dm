@@ -18,6 +18,8 @@
 	var/can_be_triggered = FALSE
 	///Whether the module is currently active
 	var/active = TRUE
+	///Can we stack multiple types of the same item?
+	var/unstackable = FALSE
 	///Label used in the ui next to the Activate/Enable/Disable buttons
 	var/active_label = "Status"
 	///Chassis power cell quantity used on activation
@@ -48,13 +50,13 @@
 /obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(can_attach(M, attach_right, user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		if(special_attaching_interaction(attach_right, M, user))
-			return TRUE //The rest is handled in the special interactions proc
+			return ITEM_INTERACT_SUCCESS //The rest is handled in the special interactions proc
 		attach(M, attach_right)
 		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/mecha_parts/mecha_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -157,6 +159,13 @@
 				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] || !mech.max_equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
 				return FALSE
 		return TRUE
+	if(unstackable)
+		var/list/obj/item/mecha_parts/mecha_equipment/contents = mech.equip_by_category[equipment_slot]
+		for(var/obj/equipment as anything in contents)
+			if(src.type == equipment.type)
+				to_chat(user, span_warning("You can't stack more of this item ontop itself!"))
+				return FALSE
+
 	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])
 		to_chat(user, span_warning("This equipment slot is already full!"))
 		return FALSE

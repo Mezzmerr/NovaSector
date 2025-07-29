@@ -1,6 +1,8 @@
 /// Your mother appears to scold you.
 /datum/hallucination/your_mother
 	random_hallucination_weight = 2
+	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
+
 	var/obj/effect/client_image_holder/hallucination/your_mother/mother
 
 /datum/hallucination/your_mother/start()
@@ -78,7 +80,7 @@
 	var/mob/living/hallucinator = parent.hallucinator
 	if (ishuman(hallucinator))
 		var/mob/living/carbon/dna_haver = hallucinator
-		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
+		image_icon = image(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
 		return ..()
 
 	if (istype(hallucinator, /mob/living/basic/pet/dog/corgi/ian))

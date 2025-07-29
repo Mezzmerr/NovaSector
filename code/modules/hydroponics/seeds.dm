@@ -50,7 +50,7 @@
 	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
-	// Format: "reagent_id" = potency multiplier
+	// Format: /datum/reagent/type = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: max(round(potency * multiplier), 1)
 	///If the chance below passes, then this many weeds sprout during growth
@@ -186,6 +186,10 @@
 /obj/item/seeds/proc/getYield()
 	var/return_yield = yield
 
+	for(var/datum/plant_gene/trait/trait in genes)
+		if(trait.trait_flags & TRAIT_NO_POLLINATION)
+			return return_yield
+
 	var/obj/machinery/hydroponics/parent = loc
 	if(istype(loc, /obj/machinery/hydroponics))
 		if(parent.yieldmod == 0)
@@ -204,7 +208,7 @@
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.drop_location() : parent.drop_location() //needed for TK
 	///Name of the grown products.
 	var/product_name
 	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
@@ -273,14 +277,14 @@
 			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-				data = list("blood_type" = "O-")
+				data = list("blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS))
 			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
 			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
 		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
-			grown_edible.juice()
+			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
 		else if(get_gene(/datum/plant_gene/trait/brewing))
 			grown_edible.ferment()
 
@@ -459,7 +463,7 @@
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/reagents)
 	return
 
-/obj/item/seeds/attackby(obj/item/O, mob/user, params)
+/obj/item/seeds/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(O))
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
 		if(isnull(choice))
@@ -563,6 +567,7 @@
 	snip.weed_chance = weed_chance
 	snip.yield = yield
 
+	snip.reagents_add = reagents_add.Copy() // NOVA EDIT ADDITION
 	return snip
 
 /**

@@ -27,6 +27,7 @@
 	var/list/allowed_choices = list(
 		/datum/crafting_bench_recipe/plate_helmet,
 		/datum/crafting_bench_recipe/plate_vest,
+		/datum/crafting_bench_recipe/chain_shirt,
 		/datum/crafting_bench_recipe/plate_gloves,
 		/datum/crafting_bench_recipe/plate_boots,
 		/datum/crafting_bench_recipe/ring,
@@ -41,6 +42,7 @@
 		/datum/crafting_bench_recipe/soup_pot,
 		/datum/crafting_bench_recipe/bokken,
 		/datum/crafting_bench_recipe/bow,
+		/datum/crafting_bench_recipe/fishing_rod,
 	)
 	/// Radial options for recipes in the allowed_choices list, populated by populate_radial_choice_list
 	var/list/radial_choice_list = list()
@@ -146,7 +148,7 @@
 	QDEL_NULL(selected_recipe)
 	current_hits_to_completion = 0
 
-/obj/structure/reagent_crafting_bench/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/reagent_crafting_bench/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(in_use)
 		balloon_alert(user, "already in use")
 		return

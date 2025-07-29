@@ -25,7 +25,7 @@
 	payday_modifier = 1.0 // Matches the rest of the pay penalties the non-human crew have
 	death_sound = 'modular_nova/master_files/sound/effects/hacked.ogg'
 	species_language_holder = /datum/language_holder/machine
-	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord/left_arm)
+	mutant_organs = list(/obj/item/organ/cyberimp/arm/toolkit/power_cord/left_arm)
 	mutantbrain = /obj/item/organ/brain/synth
 	mutantstomach = /obj/item/organ/stomach/synth
 	mutantears = /obj/item/organ/ears/synth
@@ -35,7 +35,7 @@
 	mutantheart = /obj/item/organ/heart/synth
 	mutantliver = /obj/item/organ/liver/synth
 	mutantappendix = null
-	exotic_blood = /datum/reagent/fuel/oil
+	exotic_bloodtype =  BLOOD_TYPE_OIL
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/synth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/synth,
@@ -60,6 +60,7 @@
 
 /datum/species/synthetic/get_default_mutant_bodyparts()
 	return list(
+		"ears" = list("None", FALSE),
 		"tail" = list("None", FALSE),
 		"ears" = list("None", FALSE),
 		"legs" = list("Normal Legs", FALSE),
@@ -86,7 +87,7 @@
 	playsound(transformer.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	transformer.visible_message(span_notice("[transformer]'s [screen ? "monitor lights up" : "eyes flicker to life"]!"), span_notice("All systems nominal. You're back online!"))
 
-/datum/species/synthetic/on_species_gain(mob/living/carbon/human/transformer)
+/datum/species/synthetic/on_species_gain(mob/living/carbon/human/transformer, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 
 	RegisterSignal(transformer, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
@@ -220,7 +221,7 @@
 	transformer.update_body()
 
 /datum/species/synthetic/get_types_to_preload()
-	return ..() - typesof(/obj/item/organ/cyberimp/arm/power_cord) // Don't cache things that lead to hard deletions.
+	return ..() - typesof(/obj/item/organ/cyberimp/arm/toolkit/power_cord) // Don't cache things that lead to hard deletions.
 
 /datum/species/synthetic/create_pref_unique_perks()
 	var/list/perk_descriptions = list()

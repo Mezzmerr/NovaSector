@@ -357,11 +357,11 @@
 		"Cut it out, or I'm telling chat!",
 	)
 
-/obj/item/toy/plush/nova/donator/zapp/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/toy/plush/nova/donator/zapp/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	say(pick(hit_response))
 
-/obj/item/toy/plush/nova/donator/zapp/attack(mob/living/target, mob/living/user, params)
+/obj/item/toy/plush/nova/donator/zapp/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	say(pick(hit_response))
 
@@ -723,7 +723,7 @@
 		"detain",
 		"taze",
 		)
-	squeak_override = list('modular_nova/modules/emotes/sound/emotes/female/female_sneeze.ogg' = 1)
+	squeak_override = list('sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg' = 1)
 
 /obj/item/toy/plush/nova/donator/xixi
 	name = "familiar looking harpy plushie"
@@ -820,7 +820,7 @@
 	)
 	COOLDOWN_DECLARE(chunko_cooldown)
 
-/obj/item/toy/plush/nova/donator/chunko/attackby()
+/obj/item/toy/plush/nova/donator/chunko/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, chunko_cooldown))
 		return
@@ -925,9 +925,9 @@
 		"smoke",
 		)
 	squeak_override = list(
-		'modular_nova/modules/emotes/sound/emotes/female/female_cough_3.ogg' = 1,
-		'modular_nova/modules/emotes/sound/emotes/female/female_cough_2.ogg' = 1,
-		'modular_nova/modules/emotes/sound/emotes/female/female_cough_1.ogg' = 1,
+		'sound/mobs/humanoids/human/cough/female_cough1.ogg' = 1,
+		'sound/mobs/humanoids/human/cough/female_cough2.ogg' = 1,
+		'sound/mobs/humanoids/human/cough/female_cough3.ogg' = 1,
 		)
 	responses = list(
 		"The human body can survive three weeks without skiiiiiiiiiiin.",
@@ -935,3 +935,22 @@
 		"Yeeeessss?", "Helloooooo.",
 		"Don't be such a baby, ribs grow baaaaaaaaaack.",
 		)
+
+// Donation reward for bonkaitheroris
+/obj/item/toy/plush/nova/donator/commandant
+	name = "commandant plushie"
+	desc = "From Cenion's Marketing Team: a cute plushie! A Plushie! Plooshi? Jamlet? Creature!"
+	icon_state = "plushie_commandant"
+	inhand_icon_state = "plushie_commandant"
+	lefthand_file = 'modular_nova/master_files/icons/donator/mob/inhands/donator_left.dmi'
+	righthand_file = 'modular_nova/master_files/icons/donator/mob/inhands/donator_right.dmi'
+	attack_verb_continuous = list(
+		"hugs",
+		"squishes",
+		"baps",
+	)
+	attack_verb_simple = list(
+		"hug",
+		"squish",
+		"bap",
+	)

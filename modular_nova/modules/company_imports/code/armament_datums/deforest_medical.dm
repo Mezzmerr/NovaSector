@@ -41,7 +41,7 @@
 
 /datum/armament_entry/company_import/deforest/first_aid_kit/technician_satchel
 	item_type = /obj/item/storage/backpack/duffelbag/deforest_paramedic/stocked
-	cost = PAYCHECK_COMMAND * 11.75
+	cost = PAYCHECK_COMMAND * 16
 
 // Basic first aid supplies like gauze, sutures, mesh, so on
 
@@ -85,7 +85,7 @@
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/deforest/first_aid/robo_patch
-	item_type = /obj/item/reagent_containers/pill/robotic_patch/synth_repair
+	item_type = /obj/item/stack/medical/synth_repair
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/deforest/first_aid/bandaid
@@ -153,7 +153,31 @@
 
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin
-	contraband = TRUE
+
+/datum/armament_entry/company_import/deforest/neuroware
+	subcategory = "Medical Neuroware Chips"
+	cost = PAYCHECK_LOWER * 3
+
+/datum/armament_entry/company_import/deforest/neuroware/reset
+	item_type = /obj/item/disk/neuroware/reset
+
+/datum/armament_entry/company_import/deforest/neuroware/brain
+	item_type = /obj/item/disk/neuroware/brain
+
+/datum/armament_entry/company_import/deforest/neuroware/morphine
+	item_type = /obj/item/disk/neuroware/morphine
+
+/datum/armament_entry/company_import/deforest/neuroware/lidocaine
+	item_type = /obj/item/disk/neuroware/lidocaine
+
+/datum/armament_entry/company_import/deforest/neuroware/neuroware/happiness
+	item_type = /obj/item/disk/neuroware/happiness
+
+/datum/armament_entry/company_import/deforest/neuroware/synaptizine
+	item_type = /obj/item/disk/neuroware/synaptizine
+
+/datum/armament_entry/company_import/deforest/neuroware/psicodine
+	item_type = /obj/item/disk/neuroware/psicodine
 
 // Autoinjectors for fighting
 
@@ -172,21 +196,17 @@
 
 /datum/armament_entry/company_import/deforest/medpens_stim/aranepaine
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine
-	contraband = TRUE
 
 /datum/armament_entry/company_import/deforest/medpens_stim/synalvipitol
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol
-	contraband = TRUE
 
 /datum/armament_entry/company_import/deforest/medpens_stim/twitch
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/twitch
 	cost = PAYCHECK_COMMAND * 3
-	contraband = TRUE
 
 /datum/armament_entry/company_import/deforest/medpens_stim/demoneye
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/demoneye
 	cost = PAYCHECK_COMMAND * 3
-	contraband = TRUE
 
 // Equipment, from defibs to scanners to surgical tools
 
@@ -245,6 +265,10 @@
 	item_type = /obj/item/wallframe/frontier_medstation
 	cost = PAYCHECK_COMMAND * 5
 
+/datum/armament_entry/company_import/deforest/equipment/cyber_repair_paste
+	item_type = /obj/item/cybernetic_repair_paste
+	cost = PAYCHECK_COMMAND * 2
+
 // Advanced implants, some of these can be printed but this is a way to get them before tech if you REALLY wanted
 
 /datum/armament_entry/company_import/deforest/cyber_implants
@@ -253,11 +277,11 @@
 
 /datum/armament_entry/company_import/deforest/cyber_implants/razorwire
 	name = "Razorwire Spool Implant"
-	item_type = /obj/item/organ/cyberimp/arm/razorwire
+	item_type = /obj/item/organ/cyberimp/arm/toolkit/razorwire
 
 /datum/armament_entry/company_import/deforest/cyber_implants/shell_launcher
 	name = "Shell Launch System Implant"
-	item_type = /obj/item/organ/cyberimp/arm/shell_launcher
+	item_type = /obj/item/organ/cyberimp/arm/toolkit/shell_launcher
 
 /datum/armament_entry/company_import/deforest/cyber_implants/sandy
 	name = "Qani-Laaca Sensory Computer Implant"
@@ -268,29 +292,3 @@
 	name = "Binyat Wireless Hacking System Implant"
 	item_type = /obj/item/organ/cyberimp/hackerman_deck
 	cost = PAYCHECK_COMMAND * 10
-
-// Modsuit Modules from the medical category, here instead of in Nakamura because nobody buys from this company
-
-/datum/armament_entry/company_import/deforest/medical_modules
-	subcategory = "MOD Medical Modules"
-	cost = PAYCHECK_COMMAND * 2
-
-/datum/armament_entry/company_import/deforest/medical_modules/injector
-	name = "MOD injector module"
-	item_type = /obj/item/mod/module/injector
-
-/datum/armament_entry/company_import/deforest/medical_modules/organizer
-	name = "MOD organizer module"
-	item_type = /obj/item/mod/module/organizer
-
-/datum/armament_entry/company_import/deforest/medical_modules/patient_transport
-	name = "MOD patient transport module"
-	item_type = /obj/item/mod/module/criminalcapture/patienttransport
-
-/datum/armament_entry/company_import/deforest/medical_modules/thread_ripper
-	name = "MOD thread ripper module"
-	item_type = /obj/item/mod/module/thread_ripper
-
-/datum/armament_entry/company_import/deforest/medical_modules/surgical_processor
-	name = "MOD surgical processor module"
-	item_type = /obj/item/mod/module/surgical_processor

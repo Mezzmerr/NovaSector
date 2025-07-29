@@ -30,10 +30,10 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 		/obj/item/reagent_containers/cup/tube
 	),
 	CAT_PILLS = typecacheof(list(
-		/obj/item/reagent_containers/pill/style
+		/obj/item/reagent_containers/applicator/pill/style
 	)),
 	CAT_PATCHES = typecacheof(list(
-		/obj/item/reagent_containers/pill/patch/style
+		/obj/item/reagent_containers/applicator/patch/style
 	)),
 	// NOVA EDIT ADDITION START
 	CAT_HYPOS = typecacheof(list(
@@ -65,6 +65,8 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 )))
 /// Map of reagent names to its datum path
 GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
+/// list of all plan traits
+GLOBAL_LIST_INIT(plant_traits, init_plant_traits())
 
 /// Initialises all /datum/reagent into a list indexed by reagent id
 /proc/init_chemical_reagent_list()
@@ -189,6 +191,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 	var/list/name_to_reagent = list()
 	var/list/only_names = list()
 	for (var/datum/reagent/reagent as anything in GLOB.chemical_reagents_list)
+		// NOVA EDIT ADDITION BEGIN
+		if(initial(reagent.chemical_flags) & REAGENT_NEUROWARE)
+			continue
+		// NOVA EDIT ADDITION END
 		var/name = initial(reagent.name)
 		if (length(name))
 			name_to_reagent[name] = reagent

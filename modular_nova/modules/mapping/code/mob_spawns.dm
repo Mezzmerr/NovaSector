@@ -78,7 +78,7 @@
 	icon_state = "sleeper_s"
 	computer_area = /area/ruin/space/has_grav/nova/des_two/security/prison
 	outfit = /datum/outfit/ds2/prisoner
-	spawner_job_path = /datum/job/ds2
+	spawner_job_path = /datum/job/ds2/prisoner
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate
 	name = "Syndicate Operative"
@@ -103,7 +103,7 @@
 	important_text = "Keep yourself to the same standards as Command Policy. You are not an antagonist and must Adminhelp before antagonizing station crew."
 	outfit = /datum/outfit/ds2/syndicate_command
 	computer_area = /area/ruin/space/has_grav/nova/des_two/halls
-	spawner_job_path = /datum/job/ds2
+	spawner_job_path = /datum/job/ds2/command
 	loadout_enabled = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate/special(mob/living/new_spawn)
@@ -122,15 +122,18 @@
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate/enginetech
 	outfit = /datum/outfit/ds2/syndicate/enginetech
+	spawner_job_path = /datum/job/ds2/engineer
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate/researcher
 	outfit = /datum/outfit/ds2/syndicate/researcher
+	spawner_job_path = /datum/job/ds2/science
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate/stationmed
 	outfit = /datum/outfit/ds2/syndicate/stationmed
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate/brigoff
 	outfit = /datum/outfit/ds2/syndicate/brigoff
+	spawner_job_path = /datum/job/ds2/enforce
 
 /obj/effect/mob_spawn/ghost_role/human/ds2/syndicate_command/masteratarms
 	outfit = /datum/outfit/ds2/syndicate_command/masteratarms
@@ -278,9 +281,9 @@
 	id_trim = /datum/id_trim/syndicom/nova/ds2/brigofficer
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	suit = /obj/item/clothing/suit/armor/bulletproof/old
-	back = /obj/item/storage/backpack/security/redsec
+	back = /obj/item/storage/backpack/security
 	head = /obj/item/clothing/head/helmet/swat/ds
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/redsec
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	backpack_contents = list(
 		/obj/item/storage/box/survival/interdyne = 1,
 		/obj/item/gun/ballistic/automatic/pistol/sol/evil = 1,
@@ -316,8 +319,8 @@
 	id_trim = /datum/id_trim/syndicom/nova/ds2/masteratarms
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	suit = /obj/item/clothing/suit/armor/vest/warden/syndicate
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/redsec
-	back = /obj/item/storage/backpack/satchel/sec/redsec
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	back = /obj/item/storage/backpack/satchel/sec
 	backpack_contents = list(
 		/obj/item/storage/box/survival/interdyne = 1,
 	)
@@ -499,10 +502,11 @@
 	return ..()
 
 /datum/outfit/proc/handlebank(mob/living/carbon/human/owner)
-	var/datum/bank_account/offstation_bank_account = new(owner.real_name)
+	if(!owner.mind)
+		return
+	var/datum/bank_account/offstation_bank_account = new(owner.real_name, owner.mind.assigned_role)
 	owner.account_id = offstation_bank_account.account_id
 	offstation_bank_account.replaceable = FALSE
-	offstation_bank_account.account_job = new /datum/job/ghost_role //note to self: Replace later
 	owner.add_mob_memory(/datum/memory/key/account, remembered_id = owner.account_id)
 	if(owner.wear_id)
 		var/obj/item/card/id/id_card = owner.wear_id

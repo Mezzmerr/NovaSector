@@ -8,22 +8,19 @@
 /obj/item/organ/cyberimp/sensory_enhancer
 	name = "\improper Qani-Laaca sensory computer"
 	desc = "An experimental implant replacing the spine of organics. When activated, it can give a temporary boost to mental processing speed, \
-		Which many users percieve as a slowing of time and quickening of their ability to act. Due to its nature, it is incompatible with \
+		which many users perceive as a slowing of time and quickening of their ability to act. Due to its nature, it is incompatible with \
 		systems that heavily influence the user's nervous system, like the central nervous system rebooter."
 	icon = 'modular_nova/modules/implants/icons/implants.dmi'
 	icon_state = "sandy"
 	slot = ORGAN_SLOT_BRAIN_CNS
 	zone = BODY_ZONE_HEAD
-	implant_overlay = null
-	implant_color = null
 	actions_types = list(
 		/datum/action/cooldown/sensory_enhancer,
 		/datum/action/cooldown/sensory_enhancer/overcharge,
 	)
 	w_class = WEIGHT_CLASS_SMALL
-	/// The bodypart overlay datum we should apply to whatever mob we are put into.
-	/// TODO: Refactor this to be used as a mutant bodypart_overlay instead.
-	var/datum/bodypart_overlay/simple/sensory_enhancer/simple_bodypart_overlay
+	aug_icon = 'modular_nova/modules/implants/icons/implants_onmob.dmi'
+	aug_overlay = "sandy"
 
 /obj/item/organ/cyberimp/sensory_enhancer/proc/vomit_blood()
 	owner.spray_blood(owner.dir, 2)
@@ -33,28 +30,9 @@
 		span_danger("You feel your chest seize up, a worrying amount of blood flying out of your mouth as you cough uncontrollably.")
 	)
 
-/obj/item/organ/cyberimp/sensory_enhancer/on_bodypart_insert(obj/item/bodypart/limb, movement_flags)
-	. = ..()
-	if(isteshari(owner))
-		return
-	simple_bodypart_overlay = new()
-	limb.add_bodypart_overlay(simple_bodypart_overlay)
-	owner?.update_body_parts()
-
-/obj/item/organ/cyberimp/sensory_enhancer/on_mob_remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	bodypart_owner?.remove_bodypart_overlay(simple_bodypart_overlay)
-	QDEL_NULL(simple_bodypart_overlay)
-	organ_owner.update_body_parts()
-
 /obj/item/autosurgeon/syndicate/sandy
 	name = "\improper Qani-Laaca sensory computer autosurgeon"
 	starting_organ = /obj/item/organ/cyberimp/sensory_enhancer
-
-/datum/bodypart_overlay/simple/sensory_enhancer
-	icon = 'modular_nova/modules/implants/icons/implants_onmob.dmi'
-	icon_state = "sandy"
-	layers = EXTERNAL_ADJACENT
 
 /datum/action/cooldown/sensory_enhancer
 	name = "Activate Qani-Laaca System"
@@ -133,33 +111,10 @@
 	icon_state = "hackerman"
 	slot = ORGAN_SLOT_BRAIN_CNS
 	zone = BODY_ZONE_HEAD
-	implant_overlay = null
-	implant_color = null
 	actions_types = list(/datum/action/cooldown/spell/pointed/hackerman_deck)
 	w_class = WEIGHT_CLASS_SMALL
-	/// The bodypart overlay datum we should apply to whatever mob we are put into.
-	/// TODO: Refactor this to be used as a mutant bodypart_overlay instead.
-	var/datum/bodypart_overlay/simple/hackerman/simple_bodypart_overlay
-
-/obj/item/organ/cyberimp/hackerman_deck/on_bodypart_insert(obj/item/bodypart/limb, movement_flags)
-	. = ..()
-	if(isteshari(owner))
-		return
-	simple_bodypart_overlay = new()
-	limb.add_bodypart_overlay(simple_bodypart_overlay)
-	owner?.update_body_parts()
-
-/obj/item/organ/cyberimp/hackerman_deck/on_mob_remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	bodypart_owner?.remove_bodypart_overlay(simple_bodypart_overlay)
-	QDEL_NULL(simple_bodypart_overlay)
-	organ_owner.update_body_parts()
-
-
-/datum/bodypart_overlay/simple/hackerman
-	icon = 'modular_nova/modules/implants/icons/implants_onmob.dmi'
-	icon_state = "hackerman"
-	layers = EXTERNAL_ADJACENT
+	aug_icon = 'modular_nova/modules/implants/icons/implants_onmob.dmi'
+	aug_overlay = "hackerman"
 
 /datum/action/cooldown/spell/pointed/hackerman_deck
 	name = "Activate Ranged Hacking"
@@ -183,7 +138,7 @@
 		/obj/machinery/computer/holodeck,
 		/obj/machinery/computer/emergency_shuttle,
 		/obj/machinery/recycler,
-		/obj/item/organ/cyberimp/arm/armblade,
+		/obj/item/organ/cyberimp/arm/toolkit/armblade,
 	)
 	/// How far away we can hack things
 	var/hack_range = 2

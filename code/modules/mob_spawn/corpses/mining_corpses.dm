@@ -14,6 +14,16 @@
 	spawned_human.gender = NEUTER
 	//don't need to set the human's body type (neuter)
 
+/obj/effect/mob_spawn/corpse/human/charredskeleton/dragoon
+	outfit = /datum/outfit/dragoon_gear
+
+/datum/outfit/dragoon_gear
+	name = "Dragoon"
+
+	suit = /obj/item/clothing/suit/armor/dragoon
+	head = /obj/item/clothing/head/helmet/dragoon
+	suit_store = /obj/item/spear/skybulge
+
 //Legion infested mobs
 
 /// Mob spawner used by Legion to spawn costumed bodies
@@ -32,16 +42,26 @@
 /// Returns the outfit worn by our corpse
 /obj/effect/mob_spawn/corpse/human/legioninfested/proc/select_outfit()
 	var/corpse_theme = pick_weight(list(
-		"Miner" = 64,
+		"Miner" = 53, // NOVA EDIT CHANGE - ORIGINAL: "Miner" = 64,
 		"Clown" = 5,
-		"Ashwalker" = 15,
-		"Golem" = 10,
+		"Ashwalker" = 13, //NOVA EDIT CHANGE - ORIGINAL: "Ashwalker" = 15,
+		"Golem" = 8, // NOVA EDIT CHANGE - ORIGINAL: "Golem" = 10,
 		pick(list(
 			"Cultist",
 			"Dame",
 			"Operative",
-			"Shadow",
+			// "Shadow", - NOVA EDIT REMOVAL - NEW_LEGION_CORPSES
 		)) = 4,
+		// NOVA ADDITION START - NEW_LEGION_CORPSES
+		pick(list(
+			"Engineer",
+			"Scientist",
+			"Geneticist",
+			"CargoTech",
+			"Cook",
+			"Doctor",
+		)) = 15,
+		// NOVA ADDITION END - NEW_LEGION_CORPSES
 	))
 
 	switch(corpse_theme)
@@ -59,31 +79,55 @@
 			return /datum/outfit/consumed_dame
 		if("Operative")
 			return /datum/outfit/syndicatecommandocorpse/lessenedgear
+		/* // NOVA EDIT REMOVAL START - NEW_LEGION_CORPSES
 		if("Shadow")
 			return /datum/outfit/consumed_shadowperson
+		*/ // NOVA EDIT REMOVAL END - NEW_LEGION_CORPSES
+		if("Engineer")
+			return /datum/outfit/consumed_engineer
+		if("Scientist")
+			return /datum/outfit/consumed_scientist
+		if("CargoTech")
+			return /datum/outfit/consumed_cargotech
+		if("Cook")
+			return /datum/outfit/consumed_cook
+		if("Doctor")
+			return /datum/outfit/consumed_doctor
+		// NOVA ADDITION END - NEW_LEGION_CORPSES
+
 
 /// Corpse spawner used by dwarf legions to make small corpses
 /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	spawned_human.dna.add_mutation(/datum/mutation/human/dwarfism)
+	spawned_human.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_MUTATOR)
 
 /// Corpse spawner used by snow legions with alternate costumes
 /obj/effect/mob_spawn/corpse/human/legioninfested/snow
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/snow/select_outfit()
 	var/corpse_theme = pick_weight(list(
-		"Miner" = 64,
+		"Miner" = 59, // NOVA EDIT CHANGE - ORIGINAL: "Miner" = 64,
 		"Clown" = 5,
-		"Golem" = 15,
-		"Settler" = 10,
+		"Golem" = 7, // NOVA EDIT CHANGE - ORIGINAL: "Golem" = 15,
+		"Settler" = 7, // NOVA EDIT CHANGE - ORIGINAL: "Settler" = 10,
 		pick(list(
 			"Cultist",
 			"Heremoth",
 			"Operative",
-			"Shadow",
+			//"Shadow", // NOVA EDIT REMOVAL - NEW_LEGION_CORPSES
 		)) = 4,
+		// NOVA ADDITION START - NEW_LEGION_CORPSES
+		pick(list(
+			"Engineer",
+			"Scientist",
+			"Geneticist",
+			"CargoTech",
+			"Cook",
+			"Doctor",
+		)) = 16,
+		// NOVA ADDITION END - NEW_LEGION_CORPSES
 	))
 
 	switch(corpse_theme)
@@ -101,8 +145,22 @@
 			return /datum/outfit/consumed_golem
 		if("Operative")
 			return /datum/outfit/syndicatecommandocorpse/lessenedgear
+		/* // NOVA EDIT REMOVAL START - NEW_LEGION_CORPSES
 		if("Shadow")
 			return /datum/outfit/consumed_shadowperson
+		*/ //NOVA EDIT REMOVAL END - NEW_LEGION_CORPSES
+		// NOVA ADDITION START - NEW_LEGION_CORPSES
+		if("Engineer")
+			return /datum/outfit/consumed_engineer
+		if("Scientist")
+			return /datum/outfit/consumed_scientist
+		if("CargoTech")
+			return /datum/outfit/consumed_cargotech
+		if("Cook")
+			return /datum/outfit/consumed_cook
+		if("Doctor")
+			return /datum/outfit/consumed_doctor
+		// NOVA ADDITION END - NEW_LEGION_CORPSES
 
 /// Creates a dead legion-infested skeleton
 /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton
@@ -352,7 +410,7 @@
 	glasses = /obj/item/clothing/glasses/blindfold
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	r_pocket = /obj/item/reagent_containers/pill/shadowtoxin
+	r_pocket = /obj/item/reagent_containers/applicator/pill/shadowtoxin
 
 	accessory = /obj/item/clothing/accessory/medal/plasma/nobel_science
 
